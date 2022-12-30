@@ -41,6 +41,7 @@ class SettingsView extends events.EventTarget {
                     transparencyGrid: this._find("transparency-grid").checked,
                     tagSuggestions: this._find("tag-suggestions").checked,
                     autoplayVideos: this._find("autoplay-videos").checked,
+                    muteVideos: this._find("mute-videos").checked,
                     postsPerPage: this._find("posts-per-page").value,
                     tagUnderscoresAsSpaces: this._find("underscores-as-spaces")
                         .checked,

@@ -118,6 +118,7 @@ class PostContentControl {
         const newNode = this._template({
             post: this._post,
             autoplay: settings.get().autoplayVideos,
+            muted: settings.get().muteVideos,
         });
         if (settings.get().transparencyGrid) {
             newNode.classList.add("transparency-grid");

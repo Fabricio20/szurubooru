@@ -84,6 +84,14 @@
 
             <li>
                 <%= ctx.makeCheckbox({
+                    text: 'Mute videos by default',
+                    name: 'mute-videos',
+                    checked: ctx.browsingSettings.muteVideos,
+                }) %>
+            </li>
+
+            <li>
+                <%= ctx.makeCheckbox({
                     text: 'Display underscores as spaces',
                     name: 'underscores-as-spaces',
                     checked: ctx.browsingSettings.tagUnderscoresAsSpaces,
