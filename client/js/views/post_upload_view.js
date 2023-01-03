@@ -11,6 +11,7 @@ const rowTemplate = views.getTemplate("post-upload-row");
 const misc = require('../util/misc.js');
 const TagList = require("../models/tag_list.js");
 const TagInputControl = require('../controls/tag_input_control.js');
+const ExpanderControl = require("../controls/expander_control.js");
 
 function _mimeTypeToPostType(mimeType) {
     return (
@@ -163,6 +164,8 @@ class PostUploadView extends events.EventTarget {
             return this._uploadables.findIndex((u2) => u.key === u2.key);
         };
 
+        this._commonTags = new TagList();
+
         this._contentFileDropper = new FileDropperControl(
             this._contentInputNode,
             {
@@ -189,16 +192,12 @@ class PostUploadView extends events.EventTarget {
         this._formNode.classList.add("inactive");
 
         if (this._commonTagsInputNode) {
-            this._tagControl = new TagInputControl(
-                this._commonTagsInputNode,
-                new TagList()
-            );
+            this._tagControl = new TagInputControl(this._commonTagsInputNode, this._commonTags);
+            this._tagsExpander = new ExpanderControl("common-tags", "Common Tags (0)", this._commonTagsSection);
+            this._tagControl.addEventListener("change", (e) => {
+                this._tagsExpander.title = `Common Tags (${this._commonTags.length})`;
+            });
         }
-
-        this._tagControl.addEventListener("change", (e) => {
-            this.dispatchEvent(new CustomEvent("change"));
-            this._syncExpanderTitles();
-        });
     }
 
     enableForm() {
@@ -318,9 +317,11 @@ class PostUploadView extends events.EventTarget {
             anonymous = rowNode.querySelector(".anonymous input:checked");
         }
         uploadable.anonymous = anonymous;
-        uploadable.tags = this._commonTagsInputNode
-                        ? misc.splitByWhitespace(this._commonTagsInputNode.value)
+
+        uploadable.tags = this._commonTags
+                        ? this._commonTags.map(t => t.names[0])
                         : [];
+
         uploadable.relations = [];
         for (let [i, lookalike] of uploadable.lookalikes.entries()) {
             let lookalikeNode = rowNode.querySelector(
@@ -473,6 +474,10 @@ class PostUploadView extends events.EventTarget {
 
     get _commonTagsInputNode() {
         return this._formNode.querySelector('form [name=common-tags]');
+    }
+
+    get _commonTagsSection() {
+        return this._formNode.querySelector('section .tags');
     }
 }
 

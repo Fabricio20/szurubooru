@@ -39,7 +39,9 @@
                 </span>
             </div>
 
-            <%= ctx.makeTextInput({placeholder: 'Common tags', id: 'common-tags', name: 'common-tags'}) %>
+            <section class='tags'>
+                <%= ctx.makeTextInput({placeholder: 'Common tags', id: 'common-tags', name: 'common-tags'}) %>
+            </section>
 
             <input type='button' value='Cancel' class='cancel'/>
         </div>
