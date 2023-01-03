@@ -191,17 +191,32 @@ class PostUploadView extends events.EventTarget {
         );
         this._formNode.classList.add("inactive");
 
+        new ExpanderControl(
+            "options",
+            "Upload options",
+            this._hostNode.querySelectorAll('section.options')
+        );
+
         if (this._commonTagsInputNode) {
             this._tagsExpander = new ExpanderControl(
                 "common-tags",
                 "Common Tags (0)",
-                this._hostNode.querySelectorAll(".tags")
+                this._hostNode.querySelectorAll("section.tags")
             );
             this._tagControl = new TagInputControl(this._commonTagsInputNode, this._commonTags);
             this._tagControl.addEventListener("change", (e) => {
                 this._tagsExpander.title = `Common Tags (${this._commonTags.length})`;
             });
         }
+
+        const uploadsSection = new ExpanderControl(
+            "uploads",
+            "Uploads (0)",
+            this._hostNode.querySelectorAll('section.uploads')
+        );
+        this.addEventListener("change", (e) => {
+            uploadsSection.title = `Uploads (${this._uploadables.length})`;
+        });
     }
 
     enableForm() {
