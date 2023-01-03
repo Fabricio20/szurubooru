@@ -192,8 +192,12 @@ class PostUploadView extends events.EventTarget {
         this._formNode.classList.add("inactive");
 
         if (this._commonTagsInputNode) {
+            this._tagsExpander = new ExpanderControl(
+                "common-tags",
+                "Common Tags (0)",
+                this._hostNode.querySelectorAll(".tags")
+            );
             this._tagControl = new TagInputControl(this._commonTagsInputNode, this._commonTags);
-            this._tagsExpander = new ExpanderControl("common-tags", "Common Tags (0)", this._commonTagsSection);
             this._tagControl.addEventListener("change", (e) => {
                 this._tagsExpander.title = `Common Tags (${this._commonTags.length})`;
             });
@@ -474,10 +478,6 @@ class PostUploadView extends events.EventTarget {
 
     get _commonTagsInputNode() {
         return this._formNode.querySelector('form [name=common-tags]');
-    }
-
-    get _commonTagsSection() {
-        return this._hostNode.querySelector('section .tags');
     }
 }
 
