@@ -223,16 +223,14 @@ class PostUploadView extends events.EventTarget {
         views.enableForm(this._formNode);
         this._cancelButtonNode.disabled = true;
         this._formNode.classList.remove("uploading");
-        this._hostNode.querySelector('section.options').hidden = false;
-        this._hostNode.querySelector('section.tags').hidden = false;
+        this._hostNode.querySelector('control-section').hidden = false;
     }
 
     disableForm() {
         views.disableForm(this._formNode);
         this._cancelButtonNode.disabled = false;
         this._formNode.classList.add("uploading");
-        this._hostNode.querySelector('section.options').hidden = true;
-        this._hostNode.querySelector('section.tags').hidden = true;
+        this._hostNode.querySelector('control-section').hidden = true;
     }
 
     clearMessages() {
