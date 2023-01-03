@@ -9,6 +9,7 @@ const template = views.getTemplate("post-upload");
 const rowTemplate = views.getTemplate("post-upload-row");
 
 const misc = require('../util/misc.js');
+const TagList = require("../models/tag_list.js");
 const TagInputControl = require('../controls/tag_input_control.js');
 
 function _mimeTypeToPostType(mimeType) {
@@ -190,9 +191,14 @@ class PostUploadView extends events.EventTarget {
         if (this._commonTagsInputNode) {
             this._tagControl = new TagInputControl(
                 this._commonTagsInputNode,
-                []
+                new TagList()
             );
         }
+
+        this._tagControl.addEventListener("change", (e) => {
+            this.dispatchEvent(new CustomEvent("change"));
+            this._syncExpanderTitles();
+        });
     }
 
     enableForm() {
