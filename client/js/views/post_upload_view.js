@@ -223,14 +223,14 @@ class PostUploadView extends events.EventTarget {
         views.enableForm(this._formNode);
         this._cancelButtonNode.disabled = true;
         this._formNode.classList.remove("uploading");
-        this._hostNode.querySelector('control-section').hidden = false;
+        this._hostNode.querySelector("section.control-section").hidden = false;
     }
 
     disableForm() {
         views.disableForm(this._formNode);
         this._cancelButtonNode.disabled = false;
         this._formNode.classList.add("uploading");
-        this._hostNode.querySelector('control-section').hidden = true;
+        this._hostNode.querySelector("section.control-section").hidden = true;
     }
 
     clearMessages() {
@@ -256,7 +256,7 @@ class PostUploadView extends events.EventTarget {
 
     addUploadables(uploadables) {
         this._formNode.classList.remove("inactive");
-        this._hostNode.querySelector('control-section').hidden = false;
+        this._hostNode.querySelector("section.control-section").hidden = false;
         let duplicatesFound = 0;
         for (let uploadable of uploadables) {
             if (this._uploadables.find(uploadable) !== -1) {
@@ -296,7 +296,7 @@ class PostUploadView extends events.EventTarget {
         if (!this._uploadables.length) {
             this._formNode.classList.add("inactive");
             this._submitButtonNode.value = "Upload all";
-            this._hostNode.querySelector('control-section').hidden = true;
+            this._hostNode.querySelector("section.control-section").hidden = true;
         }
     }
 
