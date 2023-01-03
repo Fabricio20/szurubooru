@@ -256,6 +256,7 @@ class PostUploadView extends events.EventTarget {
 
     addUploadables(uploadables) {
         this._formNode.classList.remove("inactive");
+        this._hostNode.querySelector('control-section').hidden = false;
         let duplicatesFound = 0;
         for (let uploadable of uploadables) {
             if (this._uploadables.find(uploadable) !== -1) {
@@ -295,6 +296,7 @@ class PostUploadView extends events.EventTarget {
         if (!this._uploadables.length) {
             this._formNode.classList.add("inactive");
             this._submitButtonNode.value = "Upload all";
+            this._hostNode.querySelector('control-section').hidden = true;
         }
     }
 
