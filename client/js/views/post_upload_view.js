@@ -477,7 +477,7 @@ class PostUploadView extends events.EventTarget {
     }
 
     get _commonTagsSection() {
-        return this._formNode.querySelector('section .tags');
+        return this._hostNode.querySelector('section .tags');
     }
 }
 
