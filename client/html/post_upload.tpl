@@ -45,13 +45,13 @@
                 <%= ctx.makeTextInput({placeholder: 'Common tags', id: 'common-tags', name: 'common-tags'}) %>
             </section>
 
-            <section class='uploads'>
-                <input type='button' value='Cancel' class='cancel'/>
-            </section>
+            <input type='button' value='Cancel' class='cancel'/>
         </div>
 
         <div class='messages'></div>
 
-        <ul class='uploadables-container'></ul>
+        <section class='uploads'>
+            <ul class='uploadables-container'></ul>
+        </section>
     </form>
 </div>

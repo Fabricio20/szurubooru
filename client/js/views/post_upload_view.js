@@ -191,9 +191,9 @@ class PostUploadView extends events.EventTarget {
         );
         this._formNode.classList.add("inactive");
 
-        new ExpanderControl(
+        this._optionsExpander = new ExpanderControl(
             "options",
-            "Upload options",
+            "Options",
             this._hostNode.querySelectorAll('section.options')
         );
 
@@ -201,7 +201,7 @@ class PostUploadView extends events.EventTarget {
             this._tagsExpander = new ExpanderControl(
                 "common-tags",
                 "Common Tags (0)",
-                this._hostNode.querySelectorAll("section.tags")
+                this._hostNode.querySelectorAll('section.tags')
             );
             this._tagControl = new TagInputControl(this._commonTagsInputNode, this._commonTags);
             this._tagControl.addEventListener("change", (e) => {
@@ -209,13 +209,13 @@ class PostUploadView extends events.EventTarget {
             });
         }
 
-        const uploadsSection = new ExpanderControl(
+        this._uploadsExpander = new ExpanderControl(
             "uploads",
             "Uploads (0)",
             this._hostNode.querySelectorAll('section.uploads')
         );
         this.addEventListener("change", (e) => {
-            uploadsSection.title = `Uploads (${this._uploadables.length})`;
+            this._uploadsExpander.title = `Uploads (${this._uploadables.length})`;
         });
     }
 
@@ -223,12 +223,16 @@ class PostUploadView extends events.EventTarget {
         views.enableForm(this._formNode);
         this._cancelButtonNode.disabled = true;
         this._formNode.classList.remove("uploading");
+        this._hostNode.querySelector('section.options').hidden = false;
+        this._hostNode.querySelector('section.tags').hidden = false;
     }
 
     disableForm() {
         views.disableForm(this._formNode);
         this._cancelButtonNode.disabled = false;
         this._formNode.classList.add("uploading");
+        this._hostNode.querySelector('section.options').hidden = true;
+        this._hostNode.querySelector('section.tags').hidden = true;
     }
 
     clearMessages() {
