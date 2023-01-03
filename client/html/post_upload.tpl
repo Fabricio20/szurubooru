@@ -52,8 +52,6 @@
 
         <div class='messages'></div>
 
-        <section class='uploads'>
-            <ul class='uploadables-container'></ul>
-        </section>
+        <ul class='uploadables-container'></ul>
     </form>
 </div>

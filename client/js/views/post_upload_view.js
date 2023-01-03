@@ -208,15 +208,6 @@ class PostUploadView extends events.EventTarget {
                 this._tagsExpander.title = `Common Tags (${this._commonTags.length})`;
             });
         }
-
-        this._uploadsExpander = new ExpanderControl(
-            "uploads",
-            "Uploads (0)",
-            this._hostNode.querySelectorAll('section.uploads')
-        );
-        this.addEventListener("change", (e) => {
-            this._uploadsExpander.title = `Uploads (${this._uploadables.length})`;
-        });
     }
 
     enableForm() {
