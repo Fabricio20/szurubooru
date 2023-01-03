@@ -9,8 +9,7 @@ const template = views.getTemplate("post-upload");
 const rowTemplate = views.getTemplate("post-upload-row");
 
 const misc = require('../util/misc.js');
-const TagAutoCompleteControl =
-    require('../controls/tag_auto_complete_control.js');
+const TagInputControl = require('../controls/tag_input_control.js');
 
 function _mimeTypeToPostType(mimeType) {
     return (
@@ -189,13 +188,10 @@ class PostUploadView extends events.EventTarget {
         this._formNode.classList.add("inactive");
 
         if (this._commonTagsInputNode) {
-            this._autoCompleteControl = new TagAutoCompleteControl(
+            this._tagControl = new TagInputControl(
                 this._commonTagsInputNode,
-                {
-                    confirm: tag =>
-                        this._autoCompleteControl.replaceSelectedText(
-                            misc.escapeSearchTerm(tag.names[0]), true),
-                });
+                []
+            );
         }
     }
 
@@ -316,13 +312,9 @@ class PostUploadView extends events.EventTarget {
             anonymous = rowNode.querySelector(".anonymous input:checked");
         }
         uploadable.anonymous = anonymous;
-
-        uploadable.tags = [];
-        if (this._commonTagsInputNode) {
-            var tags = this._commonTagsInputNode.value.split(' ');
-            tags = tags.filter(t => t != "").map(t => t.replace('\\', ''));
-            uploadable.tags = uploadable.tags.concat(tags);
-        }
+        uploadable.tags = this._commonTagsInputNode
+                        ? misc.splitByWhitespace(this._commonTagsInputNode.value)
+                        : [];
         uploadable.relations = [];
         for (let [i, lookalike] of uploadable.lookalikes.entries()) {
             let lookalikeNode = rowNode.querySelector(
